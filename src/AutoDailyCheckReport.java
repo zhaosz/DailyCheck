@@ -12,7 +12,8 @@ public static void main(String[] args) throws Exception {
 
 	AutoDailyCheck Dailycheck = new AutoDailyCheck();
 	
-	AutoDailyCheck Dailycheck1 = new AutoDailyCheck();
+	System.out.println("testsssss");
+	
 	
 	InputStream in = AutoDailyCheckReport.class.getClassLoader().getResourceAsStream("FTPFromMainframe.propeties"); 
     Properties properties=new Properties(); 
