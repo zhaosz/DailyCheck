@@ -37,6 +37,7 @@ public static void main(String[] args) throws Exception {
     Dailycheck.FTPfile(MainframePatch,MainframeFileName, localfilename);
     
     Dailycheck.logoff();
+    Dailycheck.logon(address, ID, password);
     
     Map<String, ArrayList<String>> Dailyreport   =  Dailycheck.SpareReport(localfilename);
 
