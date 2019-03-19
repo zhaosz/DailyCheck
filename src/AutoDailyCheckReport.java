@@ -14,7 +14,7 @@ public static void main(String[] args) throws Exception {
 	
 	System.out.println("testsssss");
 	System.out.println("testsssssxxxx");
-	
+	System.out.println("222220");
 	
 	InputStream in = AutoDailyCheckReport.class.getClassLoader().getResourceAsStream("FTPFromMainframe.propeties"); 
     Properties properties=new Properties(); 
