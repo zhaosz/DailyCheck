@@ -9,8 +9,7 @@ public class AutoDailyCheckReport {
 	
 public static void main(String[] args) throws Exception {
   
-	System.out.println("AP Daily Check");
-	
+
 	AutoDailyCheck Dailycheck = new AutoDailyCheck();
 	
 	InputStream in = AutoDailyCheckReport.class.getClassLoader().getResourceAsStream("FTPFromMainframe.propeties"); 
@@ -37,7 +36,8 @@ public static void main(String[] args) throws Exception {
     Dailycheck.FTPfile(MainframePatch,MainframeFileName, localfilename);
     
     Dailycheck.logoff();
-    Dailycheck.logon(address, ID, password);
+    Dailycheck.logoff();
+    
     
     Map<String, ArrayList<String>> Dailyreport   =  Dailycheck.SpareReport(localfilename);
 
