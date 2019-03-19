@@ -1,0 +1,33 @@
+//TFL#SBJ JOB (@XPR,FF31),'TFL#BIN1',USER=C078086,MSGCLASS=Q,     
+//             REGION=0M,CLASS=D                                   
+/*JOBPARM  S=AAIB                                                  
+//        JCLLIB ORDER=(TCFLT.R021FIX.PROCLIB,TCFLT.R021.PROCLIB)  
+//*                                                                
+// INCLUDE MEMBER=CFL@VAR                                          
+//*******************************************************          
+//* UNLOAD TWS APPLICATION DEFINITIONS TO A DAILY GDG              
+//*******************************************************          
+//STEP001 EXEC PGM=IEFBR14                                         
+//OLDDD     DD DSN=C078086.R021TEST.OPCCHKW,DISP=(MOD,DELETE,DELETE) 
+//*                                                                
+//STEP020 EXEC PGM=EQQYCAIN,REGION=4096K,PARM=WCIB                 
+//EQQMLIB  DD DISP=SHR,DSN=SYS1.TWSZOSP.SEQQMSG0                   
+//BATCHL   DD SYSOUT=*                                             
+//OI       DD SYSOUT=*                                             
+//AD       DD SYSOUT=*                                             
+//CPOC     DD DSN=C078086.R021TEST.OPCCHKW,                          
+//            DISP=(NEW,CATLG,DELETE),                             
+//            SPACE=(CYL,(1,5)),UNIT=SYSDA,                        
+//            DCB=(RECFM=FB,BLKSIZE=240,LRECL=80)                  
+//CPOP     DD SYSOUT=*                                             
+//EXPORTAD DD SYSOUT=*                                             
+//EXPORTOI DD SYSOUT=*                                             
+//ERREUR   DD SYSOUT=*                                             
+//EQQMLOG  DD SYSOUT=*                                             
+//EQQDUMP  DD SYSOUT=*                                             
+//SYSPRINT DD SYSOUT=*                                             
+//SYSUDUMP DD SYSOUT=*                                             
+//SYSIN    DD *                                                    
+ACTION=OPTIONS,BL=Y,BLPRT=Y,LTP=N;                                 
+ACTION=LIST,RESOURCE=CPOC,STATUS=*,ADID=TFL*.                      
+/*                                                                 
