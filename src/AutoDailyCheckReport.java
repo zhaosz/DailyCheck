@@ -13,6 +13,7 @@ public static void main(String[] args) throws Exception {
 	AutoDailyCheck Dailycheck = new AutoDailyCheck();
 	
 	System.out.println("testsssss");
+	System.out.println("testsssssxxxx");
 	
 	
 	InputStream in = AutoDailyCheckReport.class.getClassLoader().getResourceAsStream("FTPFromMainframe.propeties"); 
