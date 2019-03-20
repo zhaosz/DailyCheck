@@ -20,7 +20,7 @@ import org.apache.commons.net.ftp.FTPClient;
 public class AutoDailyCheck {
 	
 	
-FTPClient ftp       = null;
+    FTPClient ftp   = null;
 	
 	String IP       = null;
 	
@@ -39,14 +39,14 @@ FTPClient ftp       = null;
 		
 		ftp = new FTPClient();
 		
-		System.out.println("test step2");
+//		System.out.println("test step2");
 		System.out.println(IP);
 		ftp.connect(IP);
 
         boolean blogin = ftp.login(user,password);    
        
-        System.out.println(ftp.getReplyString());
-        System.out.println("test step 4");
+         System.out.println(ftp.getReplyString());
+  //      System.out.println("test step 4");
         if(!blogin) {
           System.out.println("connection failed, please check your ID and password");
           ftp.disconnect();
@@ -80,9 +80,9 @@ FTPClient ftp       = null;
           ftp.site("filetype=jes");
           System.out.println(ftp.getReplyString());
            
-         File file1 = new  File("TFL#SBJ.txt");
+         File file1 = new  File("CFL#SUBJ.txt");
           
-          ftp.storeFile("TFL#SBJ",new FileInputStream(file1));
+          ftp.storeFile("CFL#SUBJ",new FileInputStream(file1));
           String jobid = ftp.getReplyString();
        
           jobid = jobid.substring(jobid.indexOf("JOB"),jobid.indexOf("JOB")+8);
@@ -94,7 +94,7 @@ FTPClient ftp       = null;
 	
 	
 	
-	public void FTPfile( String MainframePatch,String MainframeFileName,String localfilename)throws Exception {
+	public void FTPfile( String MainframePatch,String MainframeFileName,String localfilename) {
 	
 		try {
 	
@@ -168,11 +168,11 @@ FTPClient ftp       = null;
 				ERRORAPPLN.add(s.substring(0,29));
 			}	
 			   
-			   if (batchdateNB <cuerentdateNB) {
+			   if (batchdateNB <cuerentdateNB && !STATE.equals("C")) {
 			 BatchbeforeToday.add(s.substring(0,29));
 
 			}
-			 if (batchdateNB <=cuerentdateNB && !STATE.equals("W")) {
+			 if (batchdateNB <=cuerentdateNB && !STATE.equals("W") && !STATE.equals("C")) {
 			BatchtodayES.add(s.substring(0,29));
 			}
 			 if (batchdateNB ==cuerentdateNB && STATE.equals("W")) {
@@ -263,7 +263,8 @@ FTPClient ftp       = null;
 		ArrayList<String> BatchTomorrow    = Report.get("BatchTomorrow");
 		ArrayList<String> localdiff        = CompareReport.get("localdiff");
 		ArrayList<String> mainframediff    = CompareReport.get("mainframediff");
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 		String curentdate   = df.format(new Date());
 		String dailyString  = curentdate +reportname;
 		
@@ -273,47 +274,82 @@ FTPClient ftp       = null;
 
 		FileWriter fw = new FileWriter(dailycheck.getAbsoluteFile());
 	      BufferedWriter bw = new BufferedWriter(fw);
-	      bw.write(curentdate +"Daily Check" +System.lineSeparator());
+	      
+	      bw.write("                       "+curentdate +"   "+"FDW Daily Check" +System.lineSeparator());
 	      
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      
 	      bw.write("Error Application" +System.lineSeparator());
 	      
-	      for (String S1 : ERRORAPPLN) {  
-	    	  bw.write(S1+System.lineSeparator());
+	      if(ERRORAPPLN.size()==0)
+	      {
+	    	  bw.write("NO ERROR APPLICATION");
+	    	  
 	      }
-	      
+	      else {
+	      for (String S1 : ERRORAPPLN) {  
+	    	 bw.write(S1+System.lineSeparator());
+	    	 
+	      }
+	      }
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      bw.write("Batch before yeterday"+System.lineSeparator());
     
+	      if(BatchbeforeToday.size()==0)
+	      {
+	    	  bw.write("NO WAIT,RUNNNIG,ERROR APPLICATION");
+	    	  
+		      }
+	      else {
 	      for (String S2 : BatchbeforeToday) {
 	    	  
 	    	  bw.write(S2+System.lineSeparator());
-	      }
-
+	    	 
+	      }}
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      bw.write("2.applications running now"+System.lineSeparator());
 	      for (String S3 : BatchtodayES) {
 	    	  
 	    	  bw.write(S3+System.lineSeparator());
+	    	 
 	      }
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      bw.write("3.current plan for today opc schedule" +System.lineSeparator());
 	      for (String S4 : BatchtodayW) {
 	    	  
 	    	  bw.write(S4+System.lineSeparator());
-	      }
-	      bw.write("Local is different" +System.lineSeparator());
-	      for (String S6 : localdiff) {
-
 	    	  
-	    	  bw.write(S6+System.lineSeparator());
 	      }
 	      
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      bw.write("Local is different" +System.lineSeparator());
+	      
+	      if(localdiff.size()==0)
+	      {
+	    	  bw.write("NO DIFFERENT FOUND");
+	    	 
+		      }
+	      else {
+	      for (String S6 : localdiff) {	    	  
+	    	  bw.write(S6+System.lineSeparator());
+	    	  
+	      }}
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      bw.write("Mainframe is different" +System.lineSeparator());
+	      
+	      if(mainframediff.size()==0)
+	      {
+	    	  bw.write("NO DIFFERENT FOUND");
+	    	  
+		      }
+	      else {
           for (String S7 : mainframediff) {
 
 	    	  
 	    	  bw.write(S7+System.lineSeparator());
-	      }
-	      
+	    	 
+	      }}
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      bw.write("opc schedule for tomorrow" +System.lineSeparator());
 	        for (String S5 : BatchTomorrow) {
 	    	  

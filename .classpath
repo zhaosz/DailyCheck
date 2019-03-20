@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/commons-net-3.6-bin/commons-net-3.6/commons-net-3.6.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/commons-net-3.6-bin/commons-net-3.6/commons-net-3.6-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/commons-net-3.6-bin/commons-net-3.6/commons-net-examples-3.6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/log4j-1.2-api-2.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/log4j-api-2.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/log4j-core-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/MyTetris.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/poi-4.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Zhaosong/jre/poi-scratchpad-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/commons-net-3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/log4j-1.2-api-2.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/log4j-api-2.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/log4j-core-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/poi-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YuPu/Downloads/poi-scratchpad-4.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

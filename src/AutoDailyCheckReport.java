@@ -11,11 +11,7 @@ public static void main(String[] args) throws Exception {
   
 
 	AutoDailyCheck Dailycheck = new AutoDailyCheck();
-	
-	System.out.println("testsssss");
-	System.out.println("testsssssxxxx");
-	System.out.println("222220");
-	
+		
 	InputStream in = AutoDailyCheckReport.class.getClassLoader().getResourceAsStream("FTPFromMainframe.propeties"); 
     Properties properties=new Properties(); 
     properties.load(in);
@@ -28,10 +24,11 @@ public static void main(String[] args) throws Exception {
     String localbatchlist   = properties.getProperty("localbatchlist");
     String reportpath       = properties.getProperty("reportPath");
     String reportname       = properties.getProperty("reportname");
+ // String jobname          = properties.getProperty("JobName");
     
     Dailycheck.logon(address, ID, password);
     
-    Dailycheck.subJCL("TFL#SBJ");
+    Dailycheck.subJCL("CFL#SUBJ");
     
     Dailycheck.logoff();
     
@@ -40,8 +37,7 @@ public static void main(String[] args) throws Exception {
     Dailycheck.FTPfile(MainframePatch,MainframeFileName, localfilename);
     
     Dailycheck.logoff();
-
-    
+   
     Map<String, ArrayList<String>> Dailyreport   =  Dailycheck.SpareReport(localfilename);
 
     Map<String, ArrayList<String>> CompareReport =  Dailycheck.CompareBatchList(Dailyreport.get("BatchtodayW"), localbatchlist);
