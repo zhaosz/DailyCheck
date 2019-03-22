@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.net.ftp.FTPClient;
 
 public class AutoDailyCheck {
@@ -264,9 +266,11 @@ public class AutoDailyCheck {
 		ArrayList<String> localdiff        = CompareReport.get("localdiff");
 		ArrayList<String> mainframediff    = CompareReport.get("mainframediff");
 		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+		SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
 		String curentdate   = df.format(new Date());
-		String dailyString  = curentdate +reportname;
+		String curentdate2   = df2.format(new Date());
+		String dailyString  ="D" +curentdate +"."+reportname;
 		
       File dailycheck=new File(reportpath,dailyString);
       try {
@@ -275,11 +279,17 @@ public class AutoDailyCheck {
 		FileWriter fw = new FileWriter(dailycheck.getAbsoluteFile());
 	      BufferedWriter bw = new BufferedWriter(fw);
 	      
-	      bw.write("                       "+curentdate +"   "+"FDW Daily Check" +System.lineSeparator());
+	      bw.write("                         "+"FDW Daily Check" +System.lineSeparator());
+	      bw.write("                                                 Date: "+curentdate2+System.lineSeparator());
+	      bw.write("                                                 Author: Edgar"+System.lineSeparator());
+	      bw.write("                                                 Reviewer: Martin Molenda"+System.lineSeparator());
+	      
 	      
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
 	      
-	      bw.write("Error Application" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                         "+"Error Application" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
 	      
 	      if(ERRORAPPLN.size()==0)
 	      {
@@ -287,13 +297,17 @@ public class AutoDailyCheck {
 	    	  
 	      }
 	      else {
+	    	 bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	      for (String S1 : ERRORAPPLN) {  
+	    
 	    	 bw.write(S1+System.lineSeparator());
 	    	 
 	      }
 	      }
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("Batch before yeterday"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                        "+"Batch before yeterday"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
     
 	      if(BatchbeforeToday.size()==0)
 	      {
@@ -301,20 +315,27 @@ public class AutoDailyCheck {
 	    	  
 		      }
 	      else {
+	    	  bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	      for (String S2 : BatchbeforeToday) {
 	    	  
 	    	  bw.write(S2+System.lineSeparator());
-	    	 
+	    	  
 	      }}
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("2.applications running now"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                       "+"applications running now"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	      for (String S3 : BatchtodayES) {
 	    	  
 	    	  bw.write(S3+System.lineSeparator());
 	    	 
 	      }
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("3.current plan for today opc schedule" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                     "+"current plan for today opc schedule" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	      for (String S4 : BatchtodayW) {
 	    	  
 	    	  bw.write(S4+System.lineSeparator());
@@ -322,7 +343,9 @@ public class AutoDailyCheck {
 	      }
 	      
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("Local is different" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                         "+"Local is different" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
 	      
 	      if(localdiff.size()==0)
 	      {
@@ -330,12 +353,15 @@ public class AutoDailyCheck {
 	    	 
 		      }
 	      else {
+	    	  bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	      for (String S6 : localdiff) {	    	  
 	    	  bw.write(S6+System.lineSeparator());
 	    	  
 	      }}
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("Mainframe is different" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                        "+"Mainframe is different" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
 	      
 	      if(mainframediff.size()==0)
 	      {
@@ -343,6 +369,7 @@ public class AutoDailyCheck {
 	    	  
 		      }
 	      else {
+	    	  bw.write("APPLICATION"+System.lineSeparator());
           for (String S7 : mainframediff) {
 
 	    	  
@@ -350,7 +377,10 @@ public class AutoDailyCheck {
 	    	 
 	      }}
 	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
-	      bw.write("opc schedule for tomorrow" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                        "+"opc schedule for tomorrow" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
 	        for (String S5 : BatchTomorrow) {
 	    	  
 	    	  bw.write(S5+System.lineSeparator());
@@ -358,6 +388,7 @@ public class AutoDailyCheck {
 	      }
 	      
 	        bw.close();
+	        JOptionPane.showMessageDialog(null, "Daily check completed,pleae check the report");
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

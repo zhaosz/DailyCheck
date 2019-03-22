@@ -1,10 +1,10 @@
 address=AAAP.AU.IBM.COM
-ID=***************
-password=***********
+ID=*****
+password=******
 MainframePatch=CFLOPC
 MainframeFileName=DAILYCK
 localfilename=C:\\Users\\YuPu\\Desktop\\Report\\FDWDailycheck.txt
 localbatchlist=C:\\Users\\YuPu\\Desktop\\Report\\FDWBatchList.txt
-reportname=Dailycheck.doc
+reportname=DailyChk.doc
 reportPath=C:\\Users\\YuPu\\Desktop\\Report
 JobName=CFL#SUBJ.txt
