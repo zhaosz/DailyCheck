@@ -206,12 +206,13 @@ public class AutoDailyCheck {
 		 
 	    ArrayList<String> local     = new ArrayList<String>();
 		ArrayList<String> mainframe = Todaybatchlist;
-		Map<String, Integer> LocalCMainframe=new HashMap<String, Integer>();
-		Map<String, Integer> MainframeCLocal=new HashMap<String, Integer>();
+		ArrayList<String> LocalCMainframe=new ArrayList<String>();
+		ArrayList<String> MainframeCLocal=new ArrayList<String>();
 		Map<String, ArrayList<String>> CompareReport=new HashMap<String, ArrayList<String>>();
 		ArrayList<String> localdiff=new ArrayList<String>();
 		ArrayList<String> mainframediff=new ArrayList<String>();
-		
+		int i=0;
+		int i2=0;
 		try {
 			BufferedReader br =new BufferedReader(new FileReader(Localbatchpath));
 			String s = null;
@@ -227,27 +228,42 @@ public class AutoDailyCheck {
 			e.printStackTrace();
 		}
 	
-		for(String string:local){//将shortList放到map中，map的value任意数字即可
-			LocalCMainframe.put(string.substring(0,17),0);
+		for(String string:local){
+			
+			LocalCMainframe.add(string.substring(0,17));
+			
+		}
+		for (String list : LocalCMainframe) {
+	         System.out.println(list);
+			         }
+		
+		for(String string:mainframe){
+			
+			MainframeCLocal.add(string.substring(0,17));
+			i2++;
+			
 			}
-		//	localdiff.clear();//清空shortList，用于存放longList中有map中没有的数据
+		
 			Integer in;
 			for(String string:mainframe){
-			   in=LocalCMainframe.get(string.substring(0,17));
-			if(null==in){
-			localdiff.add(string);//longList中有map中没有的数据
+				
+			   in=LocalCMainframe.indexOf(string.substring(0,17));
+			   if(in!=-1)
+			     LocalCMainframe.set(in,"                    ");
+			if(-1==in){
+				
+			localdiff.add(string);
 			}
 			}
 		//
-			for(String string:mainframe){//将shortList放到map中，map的value任意数字即可
-				MainframeCLocal.put(string.substring(0,17),0);
-				}
-		//		mainframediff.clear();//清空shortList，用于存放longList中有map中没有的数据
+		
 				Integer in2;
-				for(String string:local){
-				   in2=MainframeCLocal.get(string.substring(0,17));
-				if(null==in2){
-				mainframediff.add(string);//longList中有map中没有的数据
+				for(String string2:local){
+				   in2=MainframeCLocal.indexOf(string2.substring(0,17));
+				   if(in2!=-1)
+			MainframeCLocal.set(in2, "                    ");
+				if(-1==in2){
+				mainframediff.add(string2);
 				}
 				}
 			CompareReport.put("localdiff", localdiff);
