@@ -26,13 +26,15 @@ public static void main(String[] args) throws Exception {
     String reportname       = properties.getProperty("reportname");
  // String jobname          = properties.getProperty("JobName");
     
+  //  Dailycheck.UploadReport();
+    
     Dailycheck.logon(address, ID, password);
     
-    Dailycheck.subJCL("CFL#SUBJ");
+    Dailycheck.subJCL("CFL#SUBJ","GLIM");
     
     Dailycheck.logoff();
     
-    Dailycheck.logon(address, ID, password);
+  Dailycheck.logon(address, ID, password);
     
     Dailycheck.FTPfile(MainframePatch,MainframeFileName, localfilename);
     
@@ -40,10 +42,10 @@ public static void main(String[] args) throws Exception {
    
     Map<String, ArrayList<String>> Dailyreport   =  Dailycheck.SpareReport(localfilename);
 
-    Map<String, ArrayList<String>> CompareReport =  Dailycheck.CompareBatchList(Dailyreport.get("BatchtodayW"), localbatchlist);
-
-    Dailycheck.WriteintoDoc(reportname, reportpath, Dailyreport, CompareReport);
-  
+//    Map<String, ArrayList<String>> CompareReport =  Dailycheck.CompareBatchList(Dailyreport.get("BatchtodayW"), localbatchlist);
+    
+    Dailycheck.WriteintoDoc2(reportname, reportpath, Dailyreport);
    
+    
 }
 }
