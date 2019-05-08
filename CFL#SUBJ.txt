@@ -26,5 +26,5 @@
 //SYSUDUMP DD SYSOUT=*                                             
 //SYSIN    DD *                                                    
 ACTION=OPTIONS,BL=Y,BLPRT=Y,LTP=N;                                 
-ACTION=LIST,RESOURCE=CPOC,STATUS=*,ADID=CFL*.                      
+ACTION=LIST,RESOURCE=CPOC,STATUS=*,ADID=CH*.                      
 /*                                                                 

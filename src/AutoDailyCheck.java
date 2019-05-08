@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 public class AutoDailyCheck {
@@ -69,7 +70,7 @@ public class AutoDailyCheck {
 	 * This method is to submit a JCL file to jes of z/OS.
      * @param file the JCL file.
      */
-	public String subJCL(String file) throws Exception {
+	public String subJCL(String file,String Application) throws Exception {
 		  
 		
 		if(ftp == null){
@@ -412,4 +413,153 @@ public class AutoDailyCheck {
    
 	}
 	
+	public void WriteintoDoc2(String reportname,String reportpath,Map<String, ArrayList<String>> Report) {
+		ArrayList<String> ERRORAPPLN       = Report.get("ERRORAPPLN");
+		ArrayList<String> BatchbeforeToday = Report.get("BatchbeforeToday");
+	    ArrayList<String> BatchtodayES     = Report.get("BatchtodayES");
+		ArrayList<String> BatchtodayW      = Report.get("BatchtodayW");
+		ArrayList<String> BatchTomorrow    = Report.get("BatchTomorrow");
+		
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd");
+		String curentdate   = df.format(new Date());
+		String curentdate2   = df2.format(new Date());
+		String dailyString  ="D" +curentdate +"."+reportname;
+		
+      File dailycheck=new File(reportpath,dailyString);
+      try {
+		dailycheck.createNewFile();
+
+		FileWriter fw = new FileWriter(dailycheck.getAbsoluteFile());
+	      BufferedWriter bw = new BufferedWriter(fw);
+	      
+	      bw.write("                         "+"FDW Daily Check" +System.lineSeparator());
+	      bw.write("                                                 Date: "+curentdate2+System.lineSeparator());
+	      bw.write("                                                 Author: Edgar"+System.lineSeparator());
+	      bw.write("                                                 Reviewer: Martin Molenda"+System.lineSeparator());
+	      
+	      
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                         "+"Error Application" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      
+	      if(ERRORAPPLN.size()==0)
+	      {
+	    	  bw.write("NO ERROR APPLICATION");
+	    	  
+	      }
+	      else {
+	    	 bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
+	      for (String S1 : ERRORAPPLN) {  
+	    
+	    	 bw.write(S1+System.lineSeparator());
+	    	 
+	      }
+	      }
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                        "+"Batch before yeterday"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+    
+	      if(BatchbeforeToday.size()==0)
+	      {
+	    	  bw.write("NO WAIT,RUNNNIG,ERROR APPLICATION");
+	    	  
+		      }
+	      else {
+	    	  bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
+	      for (String S2 : BatchbeforeToday) {
+	    	  
+	    	  bw.write(S2+System.lineSeparator());
+	    	  
+	      }}
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                       "+"applications running now"+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
+	      for (String S3 : BatchtodayES) {
+	    	  
+	    	  bw.write(S3+System.lineSeparator());
+	    	 
+	      }
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                     "+"current plan for today opc schedule" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
+	      for (String S4 : BatchtodayW) {
+	    	  
+	    	  bw.write(S4+System.lineSeparator());
+	    	  
+	      }
+	      
+	     
+	      bw.write(System.lineSeparator()+System.lineSeparator()+System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("                        "+"opc schedule for tomorrow" +System.lineSeparator());
+	      bw.write("-------------------------------------------------------------------------"+System.lineSeparator());
+	      bw.write("APPLICATION      DATE       STATE"+System.lineSeparator());
+	        for (String S5 : BatchTomorrow) {
+	    	  
+	    	  bw.write(S5+System.lineSeparator());
+	    	 
+	      }
+	      
+	        bw.close();
+	        JOptionPane.showMessageDialog(null, "Daily check completed,pleae check the report");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   
+	}
+	
+	public void UploadReport() {
+		try {
+			SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+			String curentdate   = df.format(new Date());
+			String dailyString  ="D" +curentdate +".";				
+		FileInputStream in=new FileInputStream(new File("C:\\Users\\YuPu\\Desktop\\Report\\"+dailyString+"DailyChk.doc"));
+		boolean test=	ftp.storeFile("D190508.GLIM.DailyChk.doc", in);
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    	
+public String subJCL2(String file) throws Exception {
+		  
+		
+		if(ftp == null){
+		  System.out.println("Please logon z/OS firstly");
+		  return null;
+		}
+		else{
+		  System.out.println("++++++++++ subJCL is Started");
+		
+          ftp.site("filetype=jes");
+          System.out.println(ftp.getReplyString());
+           
+         File file1 = new  File("CFL#SENT.txt");
+          
+          ftp.storeFile("CFL#SENT",new FileInputStream(file1));
+          String jobid = ftp.getReplyString();
+       
+          jobid = jobid.substring(jobid.indexOf("JOB"),jobid.indexOf("JOB")+8);
+          JOptionPane.showMessageDialog(null, "Report have sent to mailbox");
+          return jobid;
+        }
+	}
 }
